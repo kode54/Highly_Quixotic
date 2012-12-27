@@ -7,7 +7,7 @@
 #ifndef __Q_Z80_H__
 #define __Q_Z80_H__
 
-#include "../../emuconfig.h"
+#include "emuconfig.h"
 
 #ifdef __cplusplus
 extern "C" {

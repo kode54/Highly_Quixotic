@@ -37,7 +37,7 @@
     <ClInclude Include="z80.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\emuconfig.h">
+    <ClInclude Include="emuconfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

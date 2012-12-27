@@ -7,7 +7,7 @@
 #ifndef __Q_QMIX_H__
 #define __Q_QMIX_H__
 
-#include "../../emuconfig.h"
+#include "emuconfig.h"
 
 #ifdef __cplusplus
 extern "C" {
