@@ -332,24 +332,13 @@ void EMU_CALL qmix_command(void *state, uint8 cmd, uint16 data) {
   case 2: // pitch
     //printf("qmix: pitch ch%X = %04X\n",ch,data);
     chan->pitch = (((uint32)(data & 0xFFFF)) * QMIXSTATE->pitchscaler) / 0x10000;
+    if (chan->pitch == 0) {
+      chan->on = 0;
+      anticlick(chan);
+    }
     break;
   case 3: // unknown
     //printf("qmix: unknown reg3 ch%X = %04X\n",ch,data);
-//    if(data & 0x8000) {
-      chan->on = 1;
-      chan->curbank = chan->startbank;
-      chan->curaddr = chan->startaddr;
-      chan->curloop = chan->startloop;
-      chan->curend  = chan->startend;
-      chan->phase = 0;
-      chan->sample[0] = 0;
-      chan->sample[1] = 0;
-      chan->sample[2] = 0;
-      chan->sample[3] = 0;
-//    } else {
-//      chan->on = 0;
-//    }
-    anticlick(chan);
     break;
   case 4: // loop start
     //printf("qmix: loop ch%X = %04X\n",ch,data);
@@ -369,6 +358,23 @@ void EMU_CALL qmix_command(void *state, uint8 cmd, uint16 data) {
 //      chan->address = chan->start;
 //      chan->phase = 0;
 //    }
+    if(data == 0) {
+      chan->on = 0;
+      anticlick(chan);
+    } else if (chan->on == 0) {
+      chan->on = 1;
+      chan->curbank = chan->startbank;
+      chan->curaddr = chan->startaddr;
+      chan->curloop = chan->startloop;
+      chan->curend  = chan->startend;
+      chan->phase = 0;
+      chan->sample[0] = 0;
+      chan->sample[1] = 0;
+      chan->sample[2] = 0;
+      chan->sample[3] = 0;
+      anticlick(chan);
+    }
+
     chan->vol = data;
     recalc_mix(chan);
     break;
