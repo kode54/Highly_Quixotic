@@ -155,8 +155,8 @@ uint32 EMU_CALL qsound_get_state_size(void) {
 static void EMU_CALL recompute_memory_maps(struct QSOUND_STATE *state);
 static void EMU_CALL qsound_advance(void *state, uint32 elapse);
 
-extern struct Z80_MEMORY_MAP qsound_map_in [1];
-extern struct Z80_MEMORY_MAP qsound_map_out[1];
+static struct Z80_MEMORY_MAP qsound_map_in [1];
+static struct Z80_MEMORY_MAP qsound_map_out[1];
 
 void EMU_CALL qsound_set_rates(
   void *state,
