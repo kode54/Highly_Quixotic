@@ -1200,7 +1200,7 @@ static EMU_INLINE uint8 SET(uint8 bit, uint8 value) { return value | (1<<bit); }
 #define JP do{_PC=ARG16();}while(0)
 #define JP_COND(cond) do{if(cond){JP;}else{_PC+=2;}}while(0)
 
-#define JR do{_PC+=((sint16)((sint8)(ARG())));}while(0)
+#define JR do{sint16 o=((sint16)((sint8)(ARG())));_PC+=o;}while(0)
 #define JR_COND(cond,op) do{if(cond){JR;CC(ex,op);}else{_PC+=1;}}while(0)
 
 #define CALL do{ uint16 t=ARG16(); PUSH(_PC); _PC = t; }while(0)
