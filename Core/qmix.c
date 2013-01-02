@@ -170,6 +170,15 @@ struct QMIX_STATE {
   sint32 last_out_r;
   sint32 acc_l;
   sint32 acc_r;
+
+  qmix_advance_callback cb_advance;
+  void *cb_advance_context;
+
+  qmix_command_callback cb_command;
+  void *cb_command_context;
+
+  qmix_sample_usage_callback cb_usage;
+  void *cb_usage_context;
 };
 
 uint32 EMU_CALL qmix_get_state_size(void) {
@@ -185,6 +194,21 @@ void EMU_CALL qmix_clear_state(void *state) {
 void EMU_CALL qmix_set_sample_rom(void *state, void *rom, uint32 size) {
   QMIXSTATE->sample_rom = rom;
   QMIXSTATE->sample_rom_size = size;
+}
+
+void EMU_CALL qmix_set_advance_callback(void *state, qmix_advance_callback cb, void *context) {
+  QMIXSTATE->cb_advance = cb;
+  QMIXSTATE->cb_advance_context = context;
+}
+
+void EMU_CALL qmix_set_command_callback(void *state, qmix_command_callback cb, void *context) {
+  QMIXSTATE->cb_command = cb;
+  QMIXSTATE->cb_command_context = context;
+}
+
+void EMU_CALL qmix_set_sample_usage_callback(void *state, qmix_sample_usage_callback cb, void *context) {
+  QMIXSTATE->cb_usage = cb;
+  QMIXSTATE->cb_usage_context = context;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -373,6 +397,9 @@ void EMU_CALL qmix_command(void *state, uint8 cmd, uint16 data) {
       chan->sample[2] = 0;
       chan->sample[3] = 0;
       anticlick(chan);
+      if(QMIXSTATE->cb_usage) {
+        QMIXSTATE->cb_usage(QMIXSTATE->cb_usage_context, chan->startbank + chan->startaddr, chan->startend - chan->startaddr);
+      }
     }
 
     chan->vol = data;
@@ -393,6 +420,9 @@ void EMU_CALL qmix_command(void *state, uint8 cmd, uint16 data) {
   default:
     //printf("qmix: unknown reg %02X = %04X\n",cmd,data);
     break;
+  }
+  if(QMIXSTATE->cb_command) {
+    QMIXSTATE->cb_command(QMIXSTATE->cb_command_context, cmd, data);
   }
 }
 
@@ -447,6 +477,9 @@ static void render(
 
 void EMU_CALL qmix_render(void *state, sint16 *buf, uint32 samples) {
 //printf("qmix render %u samples\n",samples);
+  if(QMIXSTATE->cb_advance) {
+    QMIXSTATE->cb_advance(QMIXSTATE->cb_advance_context, samples);
+  }
   for(; samples >= RENDERMAX; samples -= RENDERMAX) {
     render(QMIXSTATE, buf, RENDERMAX);
     if(buf) buf += 2 * RENDERMAX;
