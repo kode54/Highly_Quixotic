@@ -479,6 +479,7 @@ void EMU_CALL qmix_render(void *state, sint16 *buf, uint32 samples) {
 //printf("qmix render %u samples\n",samples);
   if(QMIXSTATE->cb_advance) {
     QMIXSTATE->cb_advance(QMIXSTATE->cb_advance_context, samples);
+    return; /* No point rendering samples when measuring, since emulator doesn't read anything from qmix */
   }
   for(; samples >= RENDERMAX; samples -= RENDERMAX) {
     render(QMIXSTATE, buf, RENDERMAX);
