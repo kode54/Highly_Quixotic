@@ -114,15 +114,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="kabuki.c" />
-    <ClCompile Include="qmix.c" />
     <ClCompile Include="qsound.c" />
+    <ClCompile Include="qsound_ctr.c" />
     <ClCompile Include="z80.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="emuconfig.h" />
     <ClInclude Include="kabuki.h" />
-    <ClInclude Include="qmix.h" />
     <ClInclude Include="qsound.h" />
+    <ClInclude Include="qsound_ctr.h" />
     <ClInclude Include="z80.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

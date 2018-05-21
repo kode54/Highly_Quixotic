@@ -14,21 +14,18 @@
     <ClCompile Include="kabuki.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="qmix.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="qsound.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="z80.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="qsound_ctr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kabuki.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="qmix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="qsound.h">
@@ -38,6 +35,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="emuconfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="qsound_ctr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
